@@ -1,0 +1,39 @@
+## Build directories
+bin/
+obj/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vs/
+
+## MonoGame specific
+*.mgcb.*
+*.xnb
+*.tmp
+
+# compiled content 
+Content/bin/
+Content/obj/
+
+## OS-specific
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+## IDEs
+# JetBrains Rider
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Dotnet CLI
+*.lock.json
+artifacts/
+
+## Logs
+*.log
