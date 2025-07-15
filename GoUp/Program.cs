@@ -1,2 +1,2 @@
-﻿using var game = new GoUp.Game1();
+﻿using var game = new GoUp.GoUp();
 game.Run();
