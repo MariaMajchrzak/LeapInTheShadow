@@ -33,17 +33,17 @@ public class GoUp : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        _playerSpriteSheet =  Content.Load<Texture2D>("spritesheetPlayer");
         _tilesSpriteSheet =  Content.Load<Texture2D>("tilesSpriteSheet");
+        _catSpriteSheet =  Content.Load<Texture2D>("catSpriteSheet");
+        _backgroundSpriteSheet =  Content.Load<Texture2D>("backgroundSpriteSheet");
 
         _tileManager = new TileManager(_tilesSpriteSheet);
-        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _playerSpriteSheet , _tileManager);
+        _backgroundManager = new BackgroundManager(_backgroundSpriteSheet);
+        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpriteSheet , _tileManager , _backgroundManager);
         _inputController = new InputController(_player); 
 
         EntityManager.AddEntity(_player);
       
-
-        // TODO: use this.Content to load your game content here
     }
 
     protected override void Update(GameTime gameTime)
@@ -51,8 +51,10 @@ public class GoUp : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
+        _backgroundManager.Update(gameTime);
         EntityManager.Update(gameTime);
         _tileManager.Update(gameTime);
+
         _inputController.ControlInput();
 
         base.Update(gameTime);
@@ -64,6 +66,7 @@ public class GoUp : Game
 
         _spriteBatch.Begin();
 
+        _backgroundManager.Draw(gameTime, _spriteBatch);
         EntityManager.Draw(gameTime, _spriteBatch);
         _tileManager.Draw(gameTime, _spriteBatch);
 
@@ -82,8 +85,11 @@ public class GoUp : Game
     private Player _player;
     private TileManager _tileManager;
     private InputController _inputController;
+    private BackgroundManager _backgroundManager;
 
-    private Texture2D _playerSpriteSheet;
+    private Texture2D _backgroundSpriteSheet;
     private Texture2D _tilesSpriteSheet;
+    private Texture2D _catSpriteSheet;
 
 }
+

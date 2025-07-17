@@ -9,7 +9,9 @@ namespace GoUp.Entities
     enum PlayerState
     {
         Idle,
-        Jump,
+        Falling,
+        JumpingLeft,
+        JumpingRight,
         Dead
     }
 }
