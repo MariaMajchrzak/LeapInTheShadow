@@ -14,7 +14,7 @@ namespace GoUp.Entities
     class BackgroundManager
     {
         //TODO: add bacgroundtile remover!
-        public BackgroundManager(Texture2D texture)
+        public BackgroundManager(Texture2D texture, Player player)
         {
             _startBackground = new Sprite(0,0 ,BACKGROUND_WIDTH,BACKGROUND_HEIGHT,texture);
             _birdBackground = new Sprite(BACKGROUND_WIDTH,0 ,BACKGROUND_WIDTH,BACKGROUND_HEIGHT,texture);
@@ -22,6 +22,9 @@ namespace GoUp.Entities
             _cloudBackground = new Sprite(BACKGROUND_WIDTH * 3,0 ,BACKGROUND_WIDTH,BACKGROUND_HEIGHT,texture);
 
             _backgroundTiles = new Queue<BackgroundTile>();
+            _player = player;
+
+            _player.OnPlayerGoUp += MoveDownBackground;
 
             backgroundInit();
         }
@@ -38,7 +41,7 @@ namespace GoUp.Entities
         {
         }
 
-        public void MoveDownBackground()
+        public void MoveDownBackground(object sender, EventArgs e)
         {
             foreach (BackgroundTile tile in _backgroundTiles)
             {
@@ -49,7 +52,7 @@ namespace GoUp.Entities
                 addNewBackground();
             }
         }
-         public void addNewBackground()
+         private void addNewBackground()
          {
             _backgroundTiles.Enqueue(new BackgroundTile(_cloudBackground, new Vector2(0,-BACKGROUND_HEIGHT)) );
          }
@@ -68,6 +71,7 @@ namespace GoUp.Entities
         private Sprite _cloudBackground;
 
         private Random _random;
+        private Player _player;
 
         private const int BACKGROUND_WIDTH = 400;
         private const int BACKGROUND_HEIGHT = 800;

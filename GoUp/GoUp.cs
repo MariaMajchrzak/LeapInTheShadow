@@ -37,9 +37,10 @@ public class GoUp : Game
         _catSpriteSheet =  Content.Load<Texture2D>("catSpriteSheet");
         _backgroundSpriteSheet =  Content.Load<Texture2D>("backgroundSpriteSheet");
 
-        _tileManager = new TileManager(_tilesSpriteSheet);
-        _backgroundManager = new BackgroundManager(_backgroundSpriteSheet);
+
         _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpriteSheet , _tileManager , _backgroundManager);
+        _tileManager = new TileManager(_tilesSpriteSheet , _player);
+        _backgroundManager = new BackgroundManager(_backgroundSpriteSheet , _player);
         _inputController = new InputController(_player); 
 
         EntityManager.AddEntity(_player);

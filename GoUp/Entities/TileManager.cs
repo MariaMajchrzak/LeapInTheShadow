@@ -21,12 +21,14 @@ namespace GoUp.Entities
             Right,
             Both
         }
-        public TileManager(Texture2D spriteSheet)
+        public TileManager(Texture2D spriteSheet , Player player)
         {
             _tileSprite = new Sprite(64, 63, TILE_WIDTH, TILE_HEIGHT, spriteSheet);
             _random = new Random();
             _tiles = new Queue<Tile>();
+            _player = player;
 
+            _player.OnPlayerGoUp += GenerateNewTiles;
             tilesInit();
 
         }
@@ -44,7 +46,7 @@ namespace GoUp.Entities
                 tile.Update(gameTime);
             }
         }
-        public void GenerateNewTiles()
+        public void GenerateNewTiles(object sender, EventArgs e)
         {
             TilePattern rnd = (TilePattern)_random.Next(3);
 
@@ -70,7 +72,7 @@ namespace GoUp.Entities
         private const int TILE_HEIGHT = 16;
         private const int AMOUNT_OF_TILE = 8;
 
-
+        private Player _player;
         private Random _random;
         private Sprite _tileSprite;
         private Queue<Tile> _tiles;

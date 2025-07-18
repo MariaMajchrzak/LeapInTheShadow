@@ -2,6 +2,7 @@
 using GoUp.System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace GoUp.Entities
 {
@@ -20,6 +21,8 @@ namespace GoUp.Entities
 
         public Vector2 Position { get; set; }
         public PlayerState PlayerState { get; private set; } = PlayerState.Idle;
+
+        public event EventHandler OnPlayerGoUp;
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -74,9 +77,7 @@ namespace GoUp.Entities
             }
             else
             {
-                _tileManager.GenerateNewTiles();
-                _backgroundManager.MoveDownBackground();
-                //TODO: player should not have acess to this managers , change this later (maybe events?)
+                OnPlayerGoUp?.Invoke(this ,EventArgs.Empty);
             }
         }
 
