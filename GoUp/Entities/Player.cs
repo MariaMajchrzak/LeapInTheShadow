@@ -20,7 +20,7 @@ namespace GoUp.Entities
         }
 
         public Vector2 Position { get; set; }
-        public PlayerState PlayerState { get; private set; } = PlayerState.Idle;
+        public PlayerState PlayerState { get; set; } = PlayerState.Idle;
 
         public event EventHandler OnPlayerGoUp;
 
@@ -44,6 +44,10 @@ namespace GoUp.Entities
             else if(PlayerState == PlayerState.JumpingLeft && this.Position.X > PLAYER_LEFT_X_POSITION)
             {
                 this.Position = new Vector2(this.Position.X - JUMP_VELOCITY * (float)gameTime.ElapsedGameTime.TotalSeconds, this.Position.Y);
+            }
+            else if(PlayerState == PlayerState.Falling)
+            {
+
             }
             else
             {

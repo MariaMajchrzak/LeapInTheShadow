@@ -27,27 +27,26 @@ namespace GoUp.Entities
         public Sprite Sprite { get; set; }
         public int HeightLevel { get; set; }
         public TileType TileType { get; set; }
+        public Vector2 Position { get; private set; }
+
         public void Draw(GameTime gameTime , SpriteBatch spriteBatch)
         {
-            Sprite.Draw(spriteBatch, _position);
+            Sprite.Draw(spriteBatch, Position);
         }
         public void Update(GameTime gameTime)
         {
             if(this.TileType == TileType.left)
             {
-                _position.X = LEFT_TILE_X_POSITION;
+                Position = new Vector2(LEFT_TILE_X_POSITION , Position.Y);
             }
             else
             {
-                _position.X = RIGHT_TILE_X_POSITION;
+                Position = new Vector2(RIGHT_TILE_X_POSITION, Position.Y);
             }
 
-            _position.Y = FIRST_TILE_Y_POSITION - HeightLevel * GAP_BETWEEN_TILE; 
+            Position = new Vector2( Position.X , FIRST_TILE_Y_POSITION - HeightLevel * GAP_BETWEEN_TILE); 
 
         }
-
-
-        private Vector2 _position;
 
         private const int RIGHT_TILE_X_POSITION = 304;
         private const int LEFT_TILE_X_POSITION = 0;

@@ -5,6 +5,7 @@ using SharpDX.Direct2D1;
 using SharpDX.MediaFoundation.DirectX;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq; 
 using System.Text;
 using System.Threading.Tasks;
@@ -41,9 +42,19 @@ namespace GoUp.Entities
         }
         public void Update(GameTime gameTime)
         {
+            //TODO: find better way to checking the collision 
+            _collisionCounter = 0;
             foreach (Tile tile in _tiles)
             {
                 tile.Update(gameTime);
+                if (checkCollision(_player, tile))
+                {
+                    _collisionCounter++;
+                }
+            }
+            if(_collisionCounter == 0 && _player.PlayerState == PlayerState.Idle)
+            {
+                _player.PlayerState = PlayerState.Falling;
             }
         }
         public void GenerateNewTiles(object sender, EventArgs e)
@@ -64,7 +75,7 @@ namespace GoUp.Entities
                 _tiles.Enqueue(new Tile(8, TileType.left, _tileSprite));
             }
 
-            TilesDown();
+            tilesDown();
         }
 
 
@@ -72,12 +83,16 @@ namespace GoUp.Entities
         private const int TILE_HEIGHT = 16;
         private const int AMOUNT_OF_TILE = 8;
 
+        private const int PLAYER_WIDTH = 27;
+        private const int PLAYER_HEIGHT = 30;
+
         private Player _player;
         private Random _random;
         private Sprite _tileSprite;
         private Queue<Tile> _tiles;
+        private int _collisionCounter;
 
-        private void TilesDown()
+        private void tilesDown()
         {
             foreach (Tile tile in _tiles)
             {
@@ -91,6 +106,20 @@ namespace GoUp.Entities
                 _tiles.Enqueue(new Tile(i, TileType.right, _tileSprite));
                 _tiles.Enqueue(new Tile(i, TileType.left, _tileSprite));
             }
+        }
+        private bool checkCollision(Player player, Tile tile)
+        {
+            
+            if(
+               tile.Position.Y <= player.Position.Y + PLAYER_HEIGHT &&
+               tile.Position.Y + TILE_HEIGHT >= player.Position.Y + PLAYER_HEIGHT &&
+               tile.Position.X <= player.Position.X &&
+               tile.Position.X + TILE_WIDTH >= player.Position.X
+            )
+            {
+                return true;
+            }
+            return false; 
         }
     }
 }
