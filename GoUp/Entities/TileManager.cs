@@ -15,7 +15,6 @@ namespace GoUp.Entities
 {
      class TileManager 
      {
-        //TODO: do tiles remover
         private enum TilePattern
         {
             Left,
@@ -42,19 +41,34 @@ namespace GoUp.Entities
         }
         public void Update(GameTime gameTime)
         {
-            //TODO: find better way to checking the collision 
+            //TODO: find better way to checking the collision
             _collisionCounter = 0;
+            _tileToRemoveCounter = 0;
             foreach (Tile tile in _tiles)
             {
                 tile.Update(gameTime);
+                if(tile.HeightLevel <= -1)
+                {
+                    _tileToRemoveCounter++;
+                }
                 if (checkCollision(_player, tile))
                 {
                     _collisionCounter++;
                 }
             }
+
             if(_collisionCounter == 0 && _player.PlayerState == PlayerState.Idle)
             {
                 _player.PlayerState = PlayerState.Falling;
+            }
+            else if (_collisionCounter > 0 && _player.PlayerState == PlayerState.Falling)
+            {
+                _player.PlayerState = PlayerState.Idle;
+            }
+            while(_tileToRemoveCounter > 0)
+            {
+                _tiles.Dequeue();
+                _tileToRemoveCounter--;
             }
         }
         public void GenerateNewTiles(object sender, EventArgs e)
@@ -91,6 +105,7 @@ namespace GoUp.Entities
         private Sprite _tileSprite;
         private Queue<Tile> _tiles;
         private int _collisionCounter;
+        private int _tileToRemoveCounter;
 
         private void tilesDown()
         {

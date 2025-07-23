@@ -34,6 +34,11 @@ namespace GoUp.Entities
             {
                 _jumpPlayerSprite.Draw(spriteBatch, this.Position);
             }
+            else if (this.PlayerState == PlayerState.Falling)
+            {
+                _idlePlayerSprite.Draw(spriteBatch, this.Position);
+                // TODO: replace the idle sprite with falling sprite
+            }
         }
         public void Update(GameTime gameTime) 
         {
@@ -47,7 +52,7 @@ namespace GoUp.Entities
             }
             else if(PlayerState == PlayerState.Falling)
             {
-
+                this.Position = new Vector2(this.Position.X, this.Position.Y + FALLING_VELOCITY * (float)gameTime.ElapsedGameTime.TotalSeconds);
             }
             else
             {
@@ -98,6 +103,7 @@ namespace GoUp.Entities
         private const int PLAYER_RIGHT_X_POSITION = 325;
         private const int PLAYER_LEFT_X_POSITION = 30;
         private const int JUMP_VELOCITY = 2500;
+        private const int FALLING_VELOCITY = 200;
 
         private const int GAP_BETWEEN_TILE = 150;
         private const int MAX_PLAYER_HEIGHT = 430;
