@@ -37,17 +37,17 @@
 /processorParam:TextureFormat=Color
 /build:../Assets/catSpritesheet.png;catSpritesheet.png
 
-#begin ../Assets/spritesheetPlayer.png
+#begin ../Assets/numberSpritesheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
-/processorParam:ColorKeyColor=0,0,0,255
+/processorParam:ColorKeyColor=255,0,255,255
 /processorParam:ColorKeyEnabled=True
 /processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:../Assets/spritesheetPlayer.png;spritesheetPlayer.png
+/build:../Assets/numberSpritesheet.png;numberSpritesheet.png
 
 #begin ../Assets/tilesSpriteSheet.png
 /importer:TextureImporter

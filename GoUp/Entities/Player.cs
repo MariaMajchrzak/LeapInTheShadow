@@ -15,14 +15,17 @@ namespace GoUp.Entities
             _tileManager = tileManager;
             _backgroundManager = backgroundManager;
 
-            _idlePlayerSprite = new Sprite(2, 2, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet);
-            _jumpPlayerSprite = new Sprite(0, 36, PLAYER_JUMPING_WIDTH, PLAYER_JUMPING_HEIGHT, spritesheet);
+            _idlePlayerSprite = new Sprite(19, 2, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet);
+            _jumpPlayerSprite = new Sprite(15, 32, PLAYER_JUMPING_WIDTH, PLAYER_JUMPING_HEIGHT, spritesheet);
+            _fallingPlayerSprite = new Sprite(21,64,22,31, spritesheet);
+
         }
 
         public Vector2 Position { get; set; }
         public PlayerState PlayerState { get; set; } = PlayerState.Idle;
 
         public event EventHandler OnPlayerGoUp;
+        public event EventHandler OnPlayerScorePoint;
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -36,8 +39,7 @@ namespace GoUp.Entities
             }
             else if (this.PlayerState == PlayerState.Falling)
             {
-                _idlePlayerSprite.Draw(spriteBatch, this.Position);
-                // TODO: replace the idle sprite with falling sprite
+                _fallingPlayerSprite.Draw(spriteBatch, this.Position);
             }
         }
         public void Update(GameTime gameTime) 
@@ -88,17 +90,21 @@ namespace GoUp.Entities
             {
                 OnPlayerGoUp?.Invoke(this ,EventArgs.Empty);
             }
+
+            OnPlayerScorePoint?.Invoke(this ,EventArgs.Empty);
         }
 
         private Sprite _idlePlayerSprite;
         private Sprite _jumpPlayerSprite;
+        private Sprite _fallingPlayerSprite;
         private TileManager _tileManager;
         private BackgroundManager _backgroundManager;
 
-        private const int PLAYER_WIDTH = 27;
-        private const int PLAYER_HEIGHT = 30;
-        private const int PLAYER_JUMPING_WIDTH = 30;
-        private const int PLAYER_JUMPING_HEIGHT = 64;
+
+        private const int PLAYER_WIDTH = 23;
+        private const int PLAYER_HEIGHT = 29;
+        private const int PLAYER_JUMPING_WIDTH = 46;
+        private const int PLAYER_JUMPING_HEIGHT = 23;
        
         private const int PLAYER_RIGHT_X_POSITION = 325;
         private const int PLAYER_LEFT_X_POSITION = 30;

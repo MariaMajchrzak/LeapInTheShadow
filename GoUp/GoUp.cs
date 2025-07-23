@@ -33,15 +33,18 @@ public class GoUp : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        _tilesSpriteSheet =  Content.Load<Texture2D>("tilesSpriteSheet");
-        _catSpriteSheet =  Content.Load<Texture2D>("catSpriteSheet");
-        _backgroundSpriteSheet =  Content.Load<Texture2D>("backgroundSpriteSheet");
+        _tilesSpritesheet =  Content.Load<Texture2D>("tilesSpriteSheet");
+        _catSpritesheet =  Content.Load<Texture2D>("catSpriteSheet");
+        _backgroundSpritesheet =  Content.Load<Texture2D>("backgroundSpriteSheet");
+        _numbersSpritesheet =  Content.Load<Texture2D>("numberSpritesheet");
 
 
-        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpriteSheet , _tileManager , _backgroundManager);
-        _tileManager = new TileManager(_tilesSpriteSheet , _player);
-        _backgroundManager = new BackgroundManager(_backgroundSpriteSheet , _player);
-        _inputController = new InputController(_player); 
+
+        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet , _tileManager , _backgroundManager);
+        _tileManager = new TileManager(_tilesSpritesheet , _player);
+        _backgroundManager = new BackgroundManager(_backgroundSpritesheet , _player);
+        _inputController = new InputController(_player);
+        _score = new Score(_player, _numbersSpritesheet);
 
         EntityManager.AddEntity(_player);
       
@@ -70,6 +73,7 @@ public class GoUp : Game
         _backgroundManager.Draw(gameTime, _spriteBatch);
         EntityManager.Draw(gameTime, _spriteBatch);
         _tileManager.Draw(gameTime, _spriteBatch);
+        _score.Draw(gameTime, _spriteBatch);
 
         _spriteBatch.End();
 
@@ -87,10 +91,12 @@ public class GoUp : Game
     private TileManager _tileManager;
     private InputController _inputController;
     private BackgroundManager _backgroundManager;
+    private Score _score;
 
-    private Texture2D _backgroundSpriteSheet;
-    private Texture2D _tilesSpriteSheet;
-    private Texture2D _catSpriteSheet;
+    private Texture2D _backgroundSpritesheet;
+    private Texture2D _tilesSpritesheet;
+    private Texture2D _catSpritesheet;
+    private Texture2D _numbersSpritesheet;
 
 }
 
