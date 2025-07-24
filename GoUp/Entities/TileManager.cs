@@ -97,8 +97,9 @@ namespace GoUp.Entities
         private const int TILE_HEIGHT = 16;
         private const int AMOUNT_OF_TILE = 8;
 
-        private const int PLAYER_WIDTH = 27;
-        private const int PLAYER_HEIGHT = 30;
+        private const int PLAYER_SCALE = 2;
+        private const int PLAYER_WIDTH = 27 * PLAYER_SCALE;
+        private const int PLAYER_HEIGHT = 28 * PLAYER_SCALE;
 
         private Player _player;
         private Random _random;

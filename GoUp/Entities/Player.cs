@@ -15,9 +15,9 @@ namespace GoUp.Entities
             _tileManager = tileManager;
             _backgroundManager = backgroundManager;
 
-            _idlePlayerSprite = new Sprite(19, 2, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet);
-            _jumpPlayerSprite = new Sprite(15, 32, PLAYER_JUMPING_WIDTH, PLAYER_JUMPING_HEIGHT, spritesheet);
-            _fallingPlayerSprite = new Sprite(21, 64, 22, 31, spritesheet);
+            _idlePlayerSprite = new Sprite(19, 2, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
+            _jumpPlayerSprite = new Sprite(15, 32, PLAYER_JUMPING_WIDTH, PLAYER_JUMPING_HEIGHT, spritesheet, PLAYER_SCALE);
+            _fallingPlayerSprite = new Sprite(21, 64, 22, 31, spritesheet, PLAYER_SCALE);
 
             _tilesPassed = 0;
         }
@@ -87,11 +87,12 @@ namespace GoUp.Entities
         private int _tilesPassed;
 
         private const int PLAYER_WIDTH = 23;
-        private const int PLAYER_HEIGHT = 29;
+        private const int PLAYER_HEIGHT = 28;
         private const int PLAYER_JUMPING_WIDTH = 46;
         private const int PLAYER_JUMPING_HEIGHT = 23;
+        private const float PLAYER_SCALE = 2f;
 
-        private const int PLAYER_RIGHT_X_POSITION = 325;
+        private const int PLAYER_RIGHT_X_POSITION = 300;
         private const int PLAYER_LEFT_X_POSITION = 30;
         private const int JUMP_VELOCITY = 2500;
         private const int FALLING_VELOCITY = 400;

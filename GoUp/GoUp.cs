@@ -85,7 +85,7 @@ public class GoUp : Game
     private const int SCREEN_HEIGHT = 800;
 
     private const int PLAYER_START_POSITION_X = 30;
-    private const int PLAYER_START_POSITION_Y = 724;
+    private const int PLAYER_START_POSITION_Y = 700;
 
     private Player _player;
     private TileManager _tileManager;
