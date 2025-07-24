@@ -9,7 +9,7 @@ namespace GoUp.Entities
     class Player : IEntity
     {
 
-        public Player(Vector2 position, Texture2D spritesheet , TileManager tileManager , BackgroundManager backgroundManager)
+        public Player(Vector2 position, Texture2D spritesheet, TileManager tileManager, BackgroundManager backgroundManager)
         {
             this.Position = position;
             _tileManager = tileManager;
@@ -17,8 +17,9 @@ namespace GoUp.Entities
 
             _idlePlayerSprite = new Sprite(19, 2, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet);
             _jumpPlayerSprite = new Sprite(15, 32, PLAYER_JUMPING_WIDTH, PLAYER_JUMPING_HEIGHT, spritesheet);
-            _fallingPlayerSprite = new Sprite(21,64,22,31, spritesheet);
+            _fallingPlayerSprite = new Sprite(21, 64, 22, 31, spritesheet);
 
+            _tilesPassed = 0;
         }
 
         public Vector2 Position { get; set; }
@@ -31,9 +32,9 @@ namespace GoUp.Entities
         {
             if (this.PlayerState == PlayerState.Idle)
             {
-                _idlePlayerSprite.Draw(spriteBatch, this.Position);
+               _idlePlayerSprite.Draw(spriteBatch, this.Position);
             }
-            else if(this.PlayerState == PlayerState.JumpingLeft || this.PlayerState == PlayerState.JumpingRight)
+            else if (this.PlayerState == PlayerState.JumpingLeft || this.PlayerState == PlayerState.JumpingRight)
             {
                 _jumpPlayerSprite.Draw(spriteBatch, this.Position);
             }
@@ -42,17 +43,17 @@ namespace GoUp.Entities
                 _fallingPlayerSprite.Draw(spriteBatch, this.Position);
             }
         }
-        public void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime)
         {
             if (PlayerState == PlayerState.JumpingRight && this.Position.X < PLAYER_RIGHT_X_POSITION)
             {
-                this.Position = new Vector2(this.Position.X + JUMP_VELOCITY * (float)gameTime.ElapsedGameTime.TotalSeconds , this.Position.Y);
+                this.Position = new Vector2(this.Position.X + JUMP_VELOCITY * (float)gameTime.ElapsedGameTime.TotalSeconds, this.Position.Y);
             }
-            else if(PlayerState == PlayerState.JumpingLeft && this.Position.X > PLAYER_LEFT_X_POSITION)
+            else if (PlayerState == PlayerState.JumpingLeft && this.Position.X > PLAYER_LEFT_X_POSITION)
             {
                 this.Position = new Vector2(this.Position.X - JUMP_VELOCITY * (float)gameTime.ElapsedGameTime.TotalSeconds, this.Position.Y);
             }
-            else if(PlayerState == PlayerState.Falling)
+            else if (PlayerState == PlayerState.Falling)
             {
                 this.Position = new Vector2(this.Position.X, this.Position.Y + FALLING_VELOCITY * (float)gameTime.ElapsedGameTime.TotalSeconds);
             }
@@ -60,39 +61,21 @@ namespace GoUp.Entities
             {
                 PlayerState = PlayerState.Idle;
             }
-        } 
+            _previousPlayerState = PlayerState;
+        }
 
         public void GoLeft()
         {
-            if (this.Position.X >= PLAYER_RIGHT_X_POSITION)
-            { 
-               this.PlayerState = PlayerState.JumpingLeft;
-            }
+            this.PlayerState = PlayerState.JumpingLeft;
             PlayerUp();
         }
 
         public void GoRight()
         {
-            if (this.Position.X <= PLAYER_LEFT_X_POSITION)
-            {
-                this.PlayerState = PlayerState.JumpingRight;
-            }
+            this.PlayerState = PlayerState.JumpingRight;
             PlayerUp();
         }
 
-        private void PlayerUp()
-        {
-            if(this.Position.Y > MAX_PLAYER_HEIGHT)
-            {
-                this.Position = new Vector2(this.Position.X, this.Position.Y - GAP_BETWEEN_TILE);
-            }
-            else
-            {
-                OnPlayerGoUp?.Invoke(this ,EventArgs.Empty);
-            }
-
-            OnPlayerScorePoint?.Invoke(this ,EventArgs.Empty);
-        }
 
         private Sprite _idlePlayerSprite;
         private Sprite _jumpPlayerSprite;
@@ -100,18 +83,39 @@ namespace GoUp.Entities
         private TileManager _tileManager;
         private BackgroundManager _backgroundManager;
 
+        private PlayerState _previousPlayerState;
+        private int _tilesPassed;
 
         private const int PLAYER_WIDTH = 23;
         private const int PLAYER_HEIGHT = 29;
         private const int PLAYER_JUMPING_WIDTH = 46;
         private const int PLAYER_JUMPING_HEIGHT = 23;
-       
+
         private const int PLAYER_RIGHT_X_POSITION = 325;
         private const int PLAYER_LEFT_X_POSITION = 30;
         private const int JUMP_VELOCITY = 2500;
-        private const int FALLING_VELOCITY = 200;
+        private const int FALLING_VELOCITY = 400;
 
         private const int GAP_BETWEEN_TILE = 150;
         private const int MAX_PLAYER_HEIGHT = 430;
+        private void PlayerUp()
+        {
+            if (this.Position.Y > MAX_PLAYER_HEIGHT)
+            {
+                this.Position = new Vector2(this.Position.X, this.Position.Y - GAP_BETWEEN_TILE);
+
+                if (_tilesPassed < 3)
+                {
+                    OnPlayerScorePoint?.Invoke(this, EventArgs.Empty);
+                }
+                _tilesPassed++;
+            }
+            else
+            {
+                OnPlayerGoUp?.Invoke(this, EventArgs.Empty);
+                OnPlayerScorePoint?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
     }
 }
