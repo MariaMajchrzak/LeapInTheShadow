@@ -21,22 +21,36 @@ namespace GoUp.Entities
             Right,
             Both
         }
-        public TileManager(Texture2D spriteSheet , Player player)
+        public TileManager(Texture2D spriteSheet , Player player, Timer timer, Score score)
         {
             _tileSprite = new Sprite(64, 63, TILE_WIDTH, TILE_HEIGHT, spriteSheet);
             _random = new Random();
             _tiles = new Queue<Tile>();
             _player = player;
+            _timer = timer;
+            _score = score;
 
             _player.OnPlayerGoUp += GenerateNewTiles;
             tilesInit();
-
         }
+
+
         public void Draw(GameTime gameTime , SpriteBatch spriteBatch)
         {
-            foreach(Tile tile in _tiles)
+            double decreseTimeBy = Math.Min(_score.Points * TIME_DECREASE_RATE, MAX_DECRESE_TIMER);
+            bool TimePassed = _timer.TimePassed > MAX_TIME_FOR_JUMP - decreseTimeBy;
+            
+            if (!TimePassed)
             {
-                tile.Draw(gameTime, spriteBatch);
+                foreach (Tile tile in _tiles)
+                {
+                    tile.Draw(gameTime, spriteBatch);
+                }
+            }
+            else
+            {
+                _tiles.Clear();
+                //TODO : don't delet all tiles only shaking one
             }
         }
         public void Update(GameTime gameTime)
@@ -54,6 +68,7 @@ namespace GoUp.Entities
                 if (checkCollision(_player, tile))
                 {
                     _collisionCounter++;
+                    //TODO : every tile that player touch start be shakink
                 }
             }
 
@@ -97,11 +112,18 @@ namespace GoUp.Entities
         private const int TILE_HEIGHT = 16;
         private const int AMOUNT_OF_TILE = 8;
 
+        private const float MAX_TIME_FOR_JUMP = 10f;
+        private const double TIME_DECREASE_RATE = 0.1;
+        private const int MAX_DECRESE_TIMER = 9;
+
         private const int PLAYER_SCALE = 2;
         private const int PLAYER_WIDTH = 27 * PLAYER_SCALE;
         private const int PLAYER_HEIGHT = 28 * PLAYER_SCALE;
 
         private Player _player;
+        private Timer _timer;
+        private Score _score;
+
         private Random _random;
         private Sprite _tileSprite;
         private Queue<Tile> _tiles;
@@ -137,5 +159,6 @@ namespace GoUp.Entities
             }
             return false; 
         }
+
     }
 }

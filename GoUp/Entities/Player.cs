@@ -9,15 +9,13 @@ namespace GoUp.Entities
     class Player : IEntity
     {
 
-        public Player(Vector2 position, Texture2D spritesheet, TileManager tileManager, BackgroundManager backgroundManager)
+        public Player(Vector2 position, Texture2D spritesheet)
         {
             this.Position = position;
-            _tileManager = tileManager;
-            _backgroundManager = backgroundManager;
 
             _idlePlayerSprite = new Sprite(19, 2, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
             _jumpPlayerSprite = new Sprite(15, 32, PLAYER_JUMPING_WIDTH, PLAYER_JUMPING_HEIGHT, spritesheet, PLAYER_SCALE);
-            _fallingPlayerSprite = new Sprite(21, 64, 22, 31, spritesheet, PLAYER_SCALE);
+            _fallingPlayerSprite = new Sprite(21, 64, PLAYER_FALLING_WIDTH, PLAYER_FALLING_HEIGHT, spritesheet, PLAYER_SCALE);
 
             _tilesPassed = 0;
         }
@@ -80,8 +78,6 @@ namespace GoUp.Entities
         private Sprite _idlePlayerSprite;
         private Sprite _jumpPlayerSprite;
         private Sprite _fallingPlayerSprite;
-        private TileManager _tileManager;
-        private BackgroundManager _backgroundManager;
 
         private PlayerState _previousPlayerState;
         private int _tilesPassed;
@@ -90,6 +86,8 @@ namespace GoUp.Entities
         private const int PLAYER_HEIGHT = 28;
         private const int PLAYER_JUMPING_WIDTH = 46;
         private const int PLAYER_JUMPING_HEIGHT = 23;
+        private const int PLAYER_FALLING_WIDTH = 22;
+        private const int PLAYER_FALLING_HEIGHT = 31;
         private const float PLAYER_SCALE = 2f;
 
         private const int PLAYER_RIGHT_X_POSITION = 300;

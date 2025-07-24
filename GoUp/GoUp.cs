@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.MediaFoundation;
 using GoUp.System;
+using Timer = GoUp.Entities.Timer;
 
 namespace GoUp;
 
@@ -40,11 +41,12 @@ public class GoUp : Game
 
 
 
-        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet , _tileManager , _backgroundManager);
-        _tileManager = new TileManager(_tilesSpritesheet , _player);
-        _backgroundManager = new BackgroundManager(_backgroundSpritesheet , _player);
-        _inputController = new InputController(_player);
+        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet);
+        _timer = new Timer(_player);
         _score = new Score(_player, _numbersSpritesheet);
+        _tileManager = new TileManager(_tilesSpritesheet, _player, _timer, _score);
+        _backgroundManager = new BackgroundManager(_backgroundSpritesheet, _player);
+        _inputController = new InputController(_player);
 
         EntityManager.AddEntity(_player);
       
@@ -58,6 +60,7 @@ public class GoUp : Game
         _backgroundManager.Update(gameTime);
         EntityManager.Update(gameTime);
         _tileManager.Update(gameTime);
+        _timer.Update(gameTime);
 
         _inputController.ControlInput();
 
@@ -92,6 +95,7 @@ public class GoUp : Game
     private InputController _inputController;
     private BackgroundManager _backgroundManager;
     private Score _score;
+    private Timer _timer;
 
     private Texture2D _backgroundSpritesheet;
     private Texture2D _tilesSpritesheet;
