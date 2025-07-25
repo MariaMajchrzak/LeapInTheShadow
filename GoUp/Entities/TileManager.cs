@@ -25,7 +25,7 @@ namespace GoUp.Entities
         {
             _tileSprite = new Sprite(64, 63, TILE_WIDTH, TILE_HEIGHT, spriteSheet);
             _random = new Random();
-            _tiles = new Queue<Tile>();
+            _tiles = new List<Tile>();
             _player = player;
             _timer = timer;
             _score = score;
@@ -40,35 +40,34 @@ namespace GoUp.Entities
             double decreseTimeBy = Math.Min(_score.Points * TIME_DECREASE_RATE, MAX_DECRESE_TIMER);
             bool TimePassed = _timer.TimePassed > MAX_TIME_FOR_JUMP - decreseTimeBy;
             
-            if (!TimePassed)
+            if (TimePassed)
             {
-                foreach (Tile tile in _tiles)
-                {
-                    tile.Draw(gameTime, spriteBatch);
-                }
+                _timer.Reset();
+                _tiles.RemoveAll(t => t.IsShaking);
             }
-            else
+
+            foreach (Tile tile in _tiles)
             {
-                _tiles.Clear();
-                //TODO : don't delet all tiles only shaking one
+                tile.Draw(gameTime, spriteBatch);
             }
+            
         }
         public void Update(GameTime gameTime)
         {
             //TODO: find better way to checking the collision
             _collisionCounter = 0;
-            _tileToRemoveCounter = 0;
+
             foreach (Tile tile in _tiles)
             {
                 tile.Update(gameTime);
-                if(tile.HeightLevel <= -1)
-                {
-                    _tileToRemoveCounter++;
-                }
-                if (checkCollision(_player, tile))
+                bool IsCollision = checkCollision(_player, tile);
+                if(IsCollision)
                 {
                     _collisionCounter++;
-                    //TODO : every tile that player touch start be shakink
+                }
+                if(IsCollision && _player.PlayerState == PlayerState.Idle)
+                {
+                    tile.IsShaking = true;
                 }
             }
 
@@ -80,11 +79,8 @@ namespace GoUp.Entities
             {
                 _player.PlayerState = PlayerState.Idle;
             }
-            while(_tileToRemoveCounter > 0)
-            {
-                _tiles.Dequeue();
-                _tileToRemoveCounter--;
-            }
+
+            _tiles.RemoveAll(t => t.HeightLevel <= -1);
         }
         public void GenerateNewTiles(object sender, EventArgs e)
         {
@@ -92,16 +88,16 @@ namespace GoUp.Entities
 
             if (rnd == TilePattern.Left)
             {
-                _tiles.Enqueue(new Tile(8, TileType.left, _tileSprite));
+                _tiles.Add(new Tile(8, TileType.left, _tileSprite));
             }
             else if (rnd == TilePattern.Right)
             {
-                _tiles.Enqueue(new Tile(8, TileType.right, _tileSprite));
+                _tiles.Add(new Tile(8, TileType.right, _tileSprite));
             }
             else 
             {
-                _tiles.Enqueue(new Tile(8, TileType.right, _tileSprite));
-                _tiles.Enqueue(new Tile(8, TileType.left, _tileSprite));
+                _tiles.Add(new Tile(8, TileType.right, _tileSprite));
+                _tiles.Add(new Tile(8, TileType.left, _tileSprite));
             }
 
             tilesDown();
@@ -126,9 +122,8 @@ namespace GoUp.Entities
 
         private Random _random;
         private Sprite _tileSprite;
-        private Queue<Tile> _tiles;
+        private List<Tile> _tiles;
         private int _collisionCounter;
-        private int _tileToRemoveCounter;
 
         private void tilesDown()
         {
@@ -141,8 +136,8 @@ namespace GoUp.Entities
         {
             for (int i = 0; i < AMOUNT_OF_TILE ; i++)
             {
-                _tiles.Enqueue(new Tile(i, TileType.right, _tileSprite));
-                _tiles.Enqueue(new Tile(i, TileType.left, _tileSprite));
+                _tiles.Add(new Tile(i, TileType.right, _tileSprite));
+                _tiles.Add(new Tile(i, TileType.left, _tileSprite));
             }
         }
         private bool checkCollision(Player player, Tile tile)
