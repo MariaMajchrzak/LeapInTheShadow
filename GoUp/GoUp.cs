@@ -38,10 +38,11 @@ public class GoUp : Game
         _catSpritesheet =  Content.Load<Texture2D>("catSpriteSheet");
         _backgroundSpritesheet =  Content.Load<Texture2D>("backgroundSpriteSheet");
         _numbersSpritesheet =  Content.Load<Texture2D>("numberSpritesheet");
+        _defaultFont = Content.Load<SpriteFont>("DefaultFont");//TODO : better font Sprite
 
 
 
-        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet);
+        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet, _defaultFont);
         _timer = new Timer(_player);
         _score = new Score(_player, _numbersSpritesheet);
         _tileManager = new TileManager(_tilesSpritesheet, _player, _timer, _score);
@@ -101,6 +102,7 @@ public class GoUp : Game
     private Texture2D _tilesSpritesheet;
     private Texture2D _catSpritesheet;
     private Texture2D _numbersSpritesheet;
+    private SpriteFont _defaultFont;
 
 }
 

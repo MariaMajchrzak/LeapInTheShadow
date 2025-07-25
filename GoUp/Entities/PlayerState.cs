@@ -8,10 +8,12 @@ namespace GoUp.Entities
 {
     enum PlayerState
     {
-        Idle,
+        Standing,
         Falling,
         JumpingLeft,
         JumpingRight,
-        Dead
+        Dead,
+        idle,
+
     }
 }

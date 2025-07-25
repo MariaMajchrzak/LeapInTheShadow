@@ -9,26 +9,33 @@ namespace GoUp.Entities
     class Player : IEntity
     {
 
-        public Player(Vector2 position, Texture2D spritesheet)
+        public Player(Vector2 position, Texture2D spritesheet, SpriteFont font)
         {
             this.Position = position;
 
             _idlePlayerSprite = new Sprite(19, 2, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
             _jumpPlayerSprite = new Sprite(15, 32, PLAYER_JUMPING_WIDTH, PLAYER_JUMPING_HEIGHT, spritesheet, PLAYER_SCALE);
             _fallingPlayerSprite = new Sprite(21, 64, PLAYER_FALLING_WIDTH, PLAYER_FALLING_HEIGHT, spritesheet, PLAYER_SCALE);
+            _font = font;
 
             _tilesPassed = 0;
+            PlayerState = PlayerState.idle;
         }
 
         public Vector2 Position { get; set; }
-        public PlayerState PlayerState { get; set; } = PlayerState.Idle;
+        public PlayerState PlayerState { get; set; } = PlayerState.idle;
 
         public event EventHandler OnPlayerGoUp;
         public event EventHandler OnPlayerScorePoint;
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (this.PlayerState == PlayerState.Idle)
+            if(this.PlayerState == PlayerState.idle)
+            {
+                _idlePlayerSprite.Draw(spriteBatch, this.Position);
+                spriteBatch.DrawString(_font, "  press \n  <-- or -->", new Vector2(130, 400), Color.Black);
+            }
+            else if (this.PlayerState == PlayerState.Standing)
             {
                _idlePlayerSprite.Draw(spriteBatch, this.Position);
             }
@@ -40,6 +47,7 @@ namespace GoUp.Entities
             {
                 _fallingPlayerSprite.Draw(spriteBatch, this.Position);
             }
+
         }
         public void Update(GameTime gameTime)
         {
@@ -55,9 +63,9 @@ namespace GoUp.Entities
             {
                 this.Position = new Vector2(this.Position.X, this.Position.Y + FALLING_VELOCITY * (float)gameTime.ElapsedGameTime.TotalSeconds);
             }
-            else
+            else if(PlayerState != PlayerState.idle)
             {
-                PlayerState = PlayerState.Idle;
+                PlayerState = PlayerState.Standing;
             }
             _previousPlayerState = PlayerState;
         }
@@ -81,6 +89,8 @@ namespace GoUp.Entities
 
         private PlayerState _previousPlayerState;
         private int _tilesPassed;
+
+        private SpriteFont _font;
 
         private const int PLAYER_WIDTH = 23;
         private const int PLAYER_HEIGHT = 28;

@@ -65,19 +65,19 @@ namespace GoUp.Entities
                 {
                     _collisionCounter++;
                 }
-                if(IsCollision && _player.PlayerState == PlayerState.Idle)
+                if(IsCollision && _player.PlayerState == PlayerState.Standing)
                 {
                     tile.IsShaking = true;
                 }
             }
 
-            if(_collisionCounter == 0 && _player.PlayerState == PlayerState.Idle)
+            if(_collisionCounter == 0 && _player.PlayerState == PlayerState.Standing)
             {
                 _player.PlayerState = PlayerState.Falling;
             }
             else if (_collisionCounter > 0 && _player.PlayerState == PlayerState.Falling)
             {
-                _player.PlayerState = PlayerState.Idle;
+                _player.PlayerState = PlayerState.Standing;
             }
 
             _tiles.RemoveAll(t => t.HeightLevel <= -1);
