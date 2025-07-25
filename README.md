@@ -1,7 +1,8 @@
 # GoUp
 A casual climbing game where you carefully move upward, tile by tile.  Plan each step, avoid mistakes, and see how high you can go.
+![cat](readmeAssets/cat.gif)
 ## game controls
-Left arrow - jump left
+Left arrow - jump left  
 Right arrow - jump right
 ## Building
 1. clone repository
