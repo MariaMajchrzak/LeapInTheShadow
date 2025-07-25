@@ -13,13 +13,15 @@ namespace GoUp.Entities
         {
             this.Position = position;
 
-            _idlePlayerSprite = new Sprite(19, 2, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
-            _jumpPlayerSprite = new Sprite(15, 32, PLAYER_JUMPING_WIDTH, PLAYER_JUMPING_HEIGHT, spritesheet, PLAYER_SCALE);
-            _fallingPlayerSprite = new Sprite(21, 64, PLAYER_FALLING_WIDTH, PLAYER_FALLING_HEIGHT, spritesheet, PLAYER_SCALE);
+            _idlePlayerSprite = new Sprite(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
+            _blinkingPlayerSprite = new Sprite(17, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
+            _jumpRightPlayerSprite = new Sprite(33, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
+            _jumpLeftPlayerSprite = new Sprite(49, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
+            _fallingPlayerSprite = new Sprite(66, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
             _font = font;
 
             _tilesPassed = 0;
-            PlayerState = PlayerState.idle;
+            makeBlinkingAnimation();
         }
 
         public Vector2 Position { get; set; }
@@ -32,16 +34,20 @@ namespace GoUp.Entities
         {
             if(this.PlayerState == PlayerState.idle)
             {
-                _idlePlayerSprite.Draw(spriteBatch, this.Position);
+                _blinkingPlayer.Draw(spriteBatch, this.Position);
                 spriteBatch.DrawString(_font, "  press \n  <-- or -->", new Vector2(130, 400), Color.Black);
             }
             else if (this.PlayerState == PlayerState.Standing)
             {
-               _idlePlayerSprite.Draw(spriteBatch, this.Position);
+                _idlePlayerSprite.Draw(spriteBatch, this.Position);
             }
-            else if (this.PlayerState == PlayerState.JumpingLeft || this.PlayerState == PlayerState.JumpingRight)
+            else if (this.PlayerState == PlayerState.JumpingLeft )
             {
-                _jumpPlayerSprite.Draw(spriteBatch, this.Position);
+                _jumpLeftPlayerSprite.Draw(spriteBatch, this.Position);
+            }
+            else if (this.PlayerState == PlayerState.JumpingRight)
+            {
+                _jumpRightPlayerSprite.Draw(spriteBatch, this.Position);
             }
             else if (this.PlayerState == PlayerState.Falling)
             {
@@ -67,7 +73,7 @@ namespace GoUp.Entities
             {
                 PlayerState = PlayerState.Standing;
             }
-            _previousPlayerState = PlayerState;
+            _blinkingPlayer.Update(gameTime);
         }
 
         public void GoLeft()
@@ -84,25 +90,24 @@ namespace GoUp.Entities
 
 
         private Sprite _idlePlayerSprite;
-        private Sprite _jumpPlayerSprite;
+        private Sprite _blinkingPlayerSprite;
+        private Sprite _jumpRightPlayerSprite;
+        private Sprite _jumpLeftPlayerSprite;
         private Sprite _fallingPlayerSprite;
 
-        private PlayerState _previousPlayerState;
+        private Animation _blinkingPlayer;
+
         private int _tilesPassed;
 
         private SpriteFont _font;
 
-        private const int PLAYER_WIDTH = 23;
-        private const int PLAYER_HEIGHT = 28;
-        private const int PLAYER_JUMPING_WIDTH = 46;
-        private const int PLAYER_JUMPING_HEIGHT = 23;
-        private const int PLAYER_FALLING_WIDTH = 22;
-        private const int PLAYER_FALLING_HEIGHT = 31;
+        private const int PLAYER_WIDTH = 16;
+        private const int PLAYER_HEIGHT = 16;
         private const float PLAYER_SCALE = 2f;
 
-        private const int PLAYER_RIGHT_X_POSITION = 300;
-        private const int PLAYER_LEFT_X_POSITION = 30;
-        private const int JUMP_VELOCITY = 2500;
+        private const int PLAYER_RIGHT_X_POSITION = 320;
+        private const int PLAYER_LEFT_X_POSITION = 50;
+        private const int JUMP_VELOCITY = 1000;
         private const int FALLING_VELOCITY = 400;
 
         private const int GAP_BETWEEN_TILE = 150;
@@ -124,6 +129,16 @@ namespace GoUp.Entities
                 OnPlayerGoUp?.Invoke(this, EventArgs.Empty);
                 OnPlayerScorePoint?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        private void makeBlinkingAnimation()
+        {
+            _blinkingPlayer = new Animation();
+            _blinkingPlayer.AddFrame(_idlePlayerSprite, 0f);
+            _blinkingPlayer.AddFrame(_blinkingPlayerSprite, 2f);
+            _blinkingPlayer.AddFrame(_idlePlayerSprite, 2.5f);
+            _blinkingPlayer.Start();
+
         }
 
     }

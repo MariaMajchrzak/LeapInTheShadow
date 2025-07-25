@@ -19,11 +19,13 @@ namespace GoUp.System
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if ( keyboardState.IsKeyDown(Keys.Right) && !_previousKeyboardState.IsKeyDown(Keys.Right) && _player.PlayerState != PlayerState.Falling)
+            if ( keyboardState.IsKeyDown(Keys.Right) && !_previousKeyboardState.IsKeyDown(Keys.Right) && 
+                (_player.PlayerState == PlayerState.Standing || _player.PlayerState == PlayerState.idle))
             {
                 _player.GoRight();
             }
-            else if(keyboardState.IsKeyDown(Keys.Left) && !_previousKeyboardState.IsKeyDown(Keys.Left) && _player.PlayerState != PlayerState.Falling)
+            else if(keyboardState.IsKeyDown(Keys.Left) && !_previousKeyboardState.IsKeyDown(Keys.Left) &&
+                ( _player.PlayerState == PlayerState.Standing || _player.PlayerState == PlayerState.idle))
             {
                 _player.GoLeft();
             }

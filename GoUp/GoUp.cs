@@ -35,7 +35,7 @@ public class GoUp : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _tilesSpritesheet =  Content.Load<Texture2D>("tilesSpriteSheet");
-        _catSpritesheet =  Content.Load<Texture2D>("catSpriteSheet");
+        _catSpritesheet =  Content.Load<Texture2D>("catsSpriteSheett");
         _backgroundSpritesheet =  Content.Load<Texture2D>("backgroundSpriteSheet");
         _numbersSpritesheet =  Content.Load<Texture2D>("numberSpritesheet");
         _defaultFont = Content.Load<SpriteFont>("DefaultFont");//TODO : better font Sprite
@@ -89,11 +89,11 @@ public class GoUp : Game
     private const int SCREEN_HEIGHT = 800;
 
     private const int PLAYER_START_POSITION_X = 30;
-    private const int PLAYER_START_POSITION_Y = 700;
+    private const int PLAYER_START_POSITION_Y = 718;
 
     private Player _player;
     private TileManager _tileManager;
-    private InputController _inputController;
+    private InputController _inputController; 
     private BackgroundManager _backgroundManager;
     private Score _score;
     private Timer _timer;

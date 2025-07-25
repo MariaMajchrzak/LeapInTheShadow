@@ -109,12 +109,12 @@ namespace GoUp.Entities
         private const int AMOUNT_OF_TILE = 8;
 
         private const float MAX_TIME_FOR_JUMP = 10f;
-        private const double TIME_DECREASE_RATE = 0.1;
+        private const double TIME_DECREASE_RATE = 0.3;
         private const int MAX_DECRESE_TIMER = 9;
 
         private const int PLAYER_SCALE = 2;
-        private const int PLAYER_WIDTH = 27 * PLAYER_SCALE;
-        private const int PLAYER_HEIGHT = 28 * PLAYER_SCALE;
+        private const int PLAYER_WIDTH = 16 * PLAYER_SCALE;
+        private const int PLAYER_HEIGHT = 16 * PLAYER_SCALE;
 
         private Player _player;
         private Timer _timer;
