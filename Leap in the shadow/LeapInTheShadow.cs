@@ -1,20 +1,20 @@
-﻿using GoUp.Graphics;
-using GoUp.Entities;
+﻿using LeapInTheSadow.Graphics;
+using LeapInTheSadow.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.MediaFoundation;
-using GoUp.System;
-using Timer = GoUp.Entities.Timer;
+using LeapInTheSadow.System;
+using Timer = LeapInTheSadow.Entities.Timer;
 
-namespace GoUp;
+namespace LeapInTheSadow;
 
-public class GoUp : Game
+public class LeapInTheShadow : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    public GoUp()
+    public LeapInTheShadow()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
@@ -38,11 +38,9 @@ public class GoUp : Game
         _catSpritesheet =  Content.Load<Texture2D>("catsSpriteSheett");
         _backgroundSpritesheet =  Content.Load<Texture2D>("backgroundSpriteSheet");
         _numbersSpritesheet =  Content.Load<Texture2D>("numberSpritesheet");
-        _defaultFont = Content.Load<SpriteFont>("DefaultFont");//TODO : better font Sprite
 
 
-
-        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet, _defaultFont);
+        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet);
         _timer = new Timer(_player);
         _score = new Score(_player, _numbersSpritesheet);
         _tileManager = new TileManager(_tilesSpritesheet, _player, _timer, _score);
@@ -72,7 +70,7 @@ public class GoUp : Game
     {
         GraphicsDevice.Clear(Color.WhiteSmoke);
 
-        _spriteBatch.Begin();
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
         _backgroundManager.Draw(gameTime, _spriteBatch);
         EntityManager.Draw(gameTime, _spriteBatch);
@@ -102,7 +100,6 @@ public class GoUp : Game
     private Texture2D _tilesSpritesheet;
     private Texture2D _catSpritesheet;
     private Texture2D _numbersSpritesheet;
-    private SpriteFont _defaultFont;
 
 }
 

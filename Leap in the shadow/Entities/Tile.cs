@@ -1,4 +1,4 @@
-﻿using GoUp.Graphics;
+﻿using LeapInTheSadow.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoUp.Entities
+namespace LeapInTheSadow.Entities
 {
     enum TileType
     {

@@ -1,4 +1,4 @@
-﻿using GoUp.Entities;
+﻿using LeapInTheSadow.Entities;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoUp.System
+namespace LeapInTheSadow.System
 {
     class InputController
     {

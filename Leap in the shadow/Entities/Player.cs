@@ -1,15 +1,15 @@
-﻿using GoUp.Graphics;
-using GoUp.System;
+﻿using LeapInTheSadow.Graphics;
+using LeapInTheSadow.System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace GoUp.Entities
+namespace LeapInTheSadow.Entities
 {
     class Player : IEntity
     {
 
-        public Player(Vector2 position, Texture2D spritesheet, SpriteFont font)
+        public Player(Vector2 position, Texture2D spritesheet)
         {
             this.Position = position;
 
@@ -18,7 +18,6 @@ namespace GoUp.Entities
             _jumpRightPlayerSprite = new Sprite(33, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
             _jumpLeftPlayerSprite = new Sprite(49, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
             _fallingPlayerSprite = new Sprite(66, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
-            _font = font;
 
             _tilesPassed = 0;
             makeBlinkingAnimation();
@@ -35,7 +34,6 @@ namespace GoUp.Entities
             if(this.PlayerState == PlayerState.idle)
             {
                 _blinkingPlayer.Draw(spriteBatch, this.Position);
-                spriteBatch.DrawString(_font, "  press \n  <-- or -->", new Vector2(130, 400), Color.Black);
             }
             else if (this.PlayerState == PlayerState.Standing)
             {
@@ -98,8 +96,6 @@ namespace GoUp.Entities
         private Animation _blinkingPlayer;
 
         private int _tilesPassed;
-
-        private SpriteFont _font;
 
         private const int PLAYER_WIDTH = 16;
         private const int PLAYER_HEIGHT = 16;

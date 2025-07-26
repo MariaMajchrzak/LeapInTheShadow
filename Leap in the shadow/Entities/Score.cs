@@ -1,4 +1,4 @@
-﻿using GoUp.Graphics;
+﻿using LeapInTheSadow.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharpDX.MediaFoundation;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
-namespace GoUp.Entities
+namespace LeapInTheSadow.Entities
 {
     class Score
     {

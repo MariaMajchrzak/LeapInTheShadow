@@ -8,7 +8,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoUp.Graphics
+namespace LeapInTheSadow.Graphics
 {
     class Animation
     {

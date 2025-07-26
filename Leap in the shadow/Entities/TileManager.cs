@@ -1,4 +1,4 @@
-﻿using GoUp.Graphics;
+﻿using LeapInTheSadow.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharpDX.Direct2D1;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
-namespace GoUp.Entities
+namespace LeapInTheSadow.Entities
 {
      class TileManager 
      {

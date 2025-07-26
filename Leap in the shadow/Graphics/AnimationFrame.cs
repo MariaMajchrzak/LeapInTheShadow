@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoUp.Graphics
+namespace LeapInTheSadow.Graphics
 {
     class AnimationFrame
     {

@@ -1,4 +1,4 @@
-﻿using GoUp.Graphics;
+﻿using LeapInTheSadow.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
-namespace GoUp.Entities
+namespace LeapInTheSadow.Entities
 {
     class BackgroundTile
     {
