@@ -84,13 +84,13 @@ namespace LeapInTheSadow.Entities
         }
         public void GenerateNewTiles(object sender, EventArgs e)
         {
-            TilePattern rnd = (TilePattern)_random.Next(3);
+            int rnd = _random.Next(10);
 
-            if (rnd == TilePattern.Left)
+            if (rnd < 5)
             {
                 _tiles.Add(new Tile(8, TileType.left, _tileSprite));
             }
-            else if (rnd == TilePattern.Right)
+            else if (rnd < 9)
             {
                 _tiles.Add(new Tile(8, TileType.right, _tileSprite));
             }

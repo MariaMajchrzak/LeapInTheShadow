@@ -13,7 +13,6 @@ namespace LeapInTheSadow.Entities
 {
     class BackgroundManager
     {
-        //TODO: add bacgroundtile remover!
         public BackgroundManager(Texture2D texture, Player player)
         {
             _startBackground = new Sprite(0,0 ,BACKGROUND_WIDTH,BACKGROUND_HEIGHT,texture,BACGROUND_SCALE);
@@ -38,6 +37,20 @@ namespace LeapInTheSadow.Entities
 
         public void Update(GameTime gameTime) 
         {
+            _backgroundToRemove = 0;
+            foreach( BackgroundTile tile in _backgroundTiles)
+            {
+                if(tile.Position.Y > SCREEN_HEIGHT)
+                {
+                    _backgroundToRemove++;
+                }
+            }
+
+            while(_backgroundToRemove != 0)
+            {
+                _backgroundToRemove--;
+                _backgroundTiles.Dequeue();
+            }
         }
 
         public void MoveDownBackground(object sender, EventArgs e)
@@ -68,12 +81,14 @@ namespace LeapInTheSadow.Entities
         private Sprite _defaultBackground;
 
         private Random _random;
+        private int _backgroundToRemove;
         private Player _player;
 
         private const int BACKGROUND_WIDTH = 100;
         private const int BACKGROUND_HEIGHT = 200;
         private const float BACGROUND_SCALE = 4f;
         private const int GAP_BETWEEN_TILE = 150;
+        private const int SCREEN_HEIGHT = 800;
 
     }
 }

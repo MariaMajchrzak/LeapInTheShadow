@@ -16,7 +16,6 @@ namespace LeapInTheSadow.Entities
 {
     class Score
     {
-        //TODO : make beter number spritesheet !!!
         public Score(Player player, Texture2D texture)
         {
             _player = player;
@@ -34,7 +33,7 @@ namespace LeapInTheSadow.Entities
         {
             if(Points == 0)
             {
-                _numberSprite = new Sprite(0, 0, NUMBER_WIDTH, NUMBER_HEIGHT, _texture);
+                _numberSprite = new Sprite(0, 0, NUMBER_WIDTH, NUMBER_HEIGHT, _texture, NUMBER_SCALE);
                 _numberSprite.Draw(spriteBatch, Position);
 
                 return;
@@ -46,9 +45,9 @@ namespace LeapInTheSadow.Entities
             while (score > 0)
             {
                 int number = score % 10;
-                _numberSprite = new Sprite(0 + number * NUMBER_WIDTH, 0, NUMBER_WIDTH, NUMBER_HEIGHT, _texture);
+                _numberSprite = new Sprite(0 + number * NUMBER_WIDTH, 0, NUMBER_WIDTH, NUMBER_HEIGHT, _texture,NUMBER_SCALE);
 
-                _numberSprite.Draw(spriteBatch, new Vector2(SCORE_DRAW_X_POSITION - numbersCounter * NUMBER_WIDTH ,SCORE_DRAW_Y_POSITION));
+                _numberSprite.Draw(spriteBatch, new Vector2(SCORE_DRAW_X_POSITION - numbersCounter * NUMBER_WIDTH * NUMBER_SCALE ,SCORE_DRAW_Y_POSITION));
 
                 score = score / 10;
                 numbersCounter++;
@@ -65,9 +64,11 @@ namespace LeapInTheSadow.Entities
         private Sprite _numberSprite;
         
 
-        private const int NUMBER_WIDTH = 32;
-        private const int NUMBER_HEIGHT = 32;
-        private const int SCORE_DRAW_X_POSITION = 350;
+        private const int NUMBER_WIDTH = 16;
+        private const int NUMBER_HEIGHT = 16;
+        private const float NUMBER_SCALE = 1.5f;
+
+        private const int SCORE_DRAW_X_POSITION = 370;
         private const int SCORE_DRAW_Y_POSITION = 10;
 
 
