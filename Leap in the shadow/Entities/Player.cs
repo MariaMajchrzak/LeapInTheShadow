@@ -63,11 +63,15 @@ namespace LeapInTheSadow.Entities
             {
                 this.Position = new Vector2(this.Position.X - JUMP_VELOCITY * (float)gameTime.ElapsedGameTime.TotalSeconds, this.Position.Y);
             }
-            else if (PlayerState == PlayerState.Falling)
+            else if (PlayerState == PlayerState.Falling && this.Position.Y < SCREEN_HEIGHT)
             {
                 this.Position = new Vector2(this.Position.X, this.Position.Y + FALLING_VELOCITY * (float)gameTime.ElapsedGameTime.TotalSeconds);
             }
-            else if(PlayerState != PlayerState.idle)
+            else if (PlayerState == PlayerState.Falling && this.Position.Y >= SCREEN_HEIGHT)
+            {
+                PlayerState = PlayerState.Dead;
+            }
+            else if(PlayerState != PlayerState.idle && PlayerState != PlayerState.Dead)
             {
                 PlayerState = PlayerState.Standing;
             }
@@ -100,6 +104,9 @@ namespace LeapInTheSadow.Entities
         private const int PLAYER_WIDTH = 16;
         private const int PLAYER_HEIGHT = 16;
         private const float PLAYER_SCALE = 2f;
+
+        private const int SCREEN_WIDTH = 400;
+        private const int SCREEN_HEIGHT = 800;
 
         private const int PLAYER_RIGHT_X_POSITION = 320;
         private const int PLAYER_LEFT_X_POSITION = 50;

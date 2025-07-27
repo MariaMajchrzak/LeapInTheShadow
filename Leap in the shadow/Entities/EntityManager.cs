@@ -44,6 +44,13 @@ namespace LeapInTheSadow.Entities
             _toAddEntities.Clear();
         }
 
+        public static void Clear()
+        {
+            _entities.Clear();
+            _toAddEntities.Clear();
+            _toRemoveEntities.Clear();
+        }
+
         private static List<IEntity> _entities = new List<IEntity>();
         private static List<IEntity> _toAddEntities = new List<IEntity>();
         private static List<IEntity> _toRemoveEntities = new List<IEntity>();
