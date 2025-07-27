@@ -18,3 +18,5 @@ git clone https://github.com/maniulka209/LeapInTheShadow
 6. Click **Finish** then you can close this window.
 7. Click **Publish**
 8. The compiled game will appear in the `publish` folder as `LeapInTheShadow.exe` along with all required files.
+#
+![gameplay](readmeAssets/gameplay.gif)

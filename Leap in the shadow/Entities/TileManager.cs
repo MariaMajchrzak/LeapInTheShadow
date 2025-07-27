@@ -23,7 +23,7 @@ namespace LeapInTheSadow.Entities
         }
         public TileManager(Texture2D spriteSheet , Player player, Timer timer, Score score)
         {
-            _tileSprite = new Sprite(64, 63, TILE_WIDTH, TILE_HEIGHT, spriteSheet);
+            _tileSprite = new Sprite(0, 0, TILE_WIDTH, TILE_HEIGHT, spriteSheet);
             _random = new Random();
             _tiles = new List<Tile>();
             _player = player;
