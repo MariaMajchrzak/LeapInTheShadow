@@ -49,12 +49,17 @@
 /processorParam:TextureFormat=Color
 /build:../Assets/catsSpriteSheett.png;catsSpriteSheett.png
 
-#begin ../Assets/DefaultFont.spriteFont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
+#begin ../Assets/menuButtonSpritesheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:../Assets/DefaultFont.spriteFont;DefaultFont.spriteFont
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Assets/menuButtonSpritesheet.png;menuButtonSpritesheet.png
 
 #begin ../Assets/numberSpritesheet.png
 /importer:TextureImporter

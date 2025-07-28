@@ -18,13 +18,13 @@ namespace LeapInTheShadow.System
             Hover,
         }
 
-        public Button(Texture2D spritesheet, Rectangle rectangle)
+        public Button(Texture2D spritesheet, Rectangle rectangle, float scale)
         {
             _state = ButtonState.Normal;
             _spritesheet = spritesheet;
 
-            _normalButtonSprite = new Sprite(0, 0,BUTTON_WIDTH, BUTTON_HEIGHT, _spritesheet,BUTTON_SCALE);
-            _hoverButtonSprite = new Sprite(BUTTON_WIDTH, 0,BUTTON_WIDTH, BUTTON_HEIGHT, _spritesheet,BUTTON_SCALE);
+            _normalButtonSprite = new Sprite(0, 0,BUTTON_WIDTH, BUTTON_HEIGHT, _spritesheet,scale);
+            _hoverButtonSprite = new Sprite(BUTTON_WIDTH, 0,BUTTON_WIDTH, BUTTON_HEIGHT, _spritesheet,scale);
 
             Rectangle = rectangle;
             _position = new Vector2(rectangle.X,rectangle.Y);
@@ -82,6 +82,5 @@ namespace LeapInTheShadow.System
 
         private const int BUTTON_WIDTH = 16;
         private const int BUTTON_HEIGHT = 16;
-        private const float BUTTON_SCALE = 2f;
     }
 }

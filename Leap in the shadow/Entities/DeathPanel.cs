@@ -19,7 +19,7 @@ namespace LeapInTheShadow.Entities
     {
         public DeathPanel(Texture2D spritesheet)
         {
-            _resetButton = new Button(spritesheet, new Microsoft.Xna.Framework.Rectangle(BUTTON_POS_X, BUTTON_POS_Y, BUTTON_WIDTH, BUTTON_HEIGHT) );
+            _resetButton = new Button(spritesheet, new Microsoft.Xna.Framework.Rectangle(BUTTON_POS_X, BUTTON_POS_Y, BUTTON_WIDTH, BUTTON_HEIGHT), BUTTON_SCALE);
         }
         public EventHandler GameReset;
         public void Draw(SpriteBatch spriteBatch)

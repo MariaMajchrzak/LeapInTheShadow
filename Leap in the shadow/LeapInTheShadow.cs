@@ -8,6 +8,7 @@ using LeapInTheSadow.System;
 using Timer = LeapInTheSadow.Entities.Timer;
 using LeapInTheShadow.Entities;
 using System;
+using LeapInTheShadow.System;
 
 namespace LeapInTheSadow;
 
@@ -15,12 +16,19 @@ public class LeapInTheShadow : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
+    private GameState _gameState;
+    private enum GameState
+    {
+        Menu,
+        Play
+    }
+        
     public LeapInTheShadow()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        _gameState = GameState.Menu;
     }
 
     protected override void Initialize()
@@ -40,7 +48,8 @@ public class LeapInTheShadow : Game
         _catSpritesheet =  Content.Load<Texture2D>("catsSpriteSheett");
         _backgroundSpritesheet =  Content.Load<Texture2D>("backgroundSpriteSheet");
         _numbersSpritesheet =  Content.Load<Texture2D>("numberSpritesheet");
-        _buttonSpritesheet =  Content.Load<Texture2D>("buttonSpritesheet");
+        _resetbuttonSpritesheet =  Content.Load<Texture2D>("buttonSpritesheet");
+        _menubuttonSpritesheet =  Content.Load<Texture2D>("menuButtonSpritesheet");
 
 
 
@@ -50,8 +59,10 @@ public class LeapInTheShadow : Game
         _tileManager = new TileManager(_tilesSpritesheet, _player, _timer, _score);
         _backgroundManager = new BackgroundManager(_backgroundSpritesheet, _player);
         _inputController = new InputController(_player);
-        _deathPanel = new DeathPanel(_buttonSpritesheet);
+        _deathPanel = new DeathPanel(_resetbuttonSpritesheet);
+        _menu = new Menu(_backgroundSpritesheet, _menubuttonSpritesheet);
 
+        _menu.onPlayButtonClicked += play;
         _deathPanel.GameReset += gameReset;
 
         EntityManager.AddEntity(_player);
@@ -63,16 +74,26 @@ public class LeapInTheShadow : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        _backgroundManager.Update(gameTime);
-        EntityManager.Update(gameTime);
-        _tileManager.Update(gameTime);
-        _timer.Update(gameTime);
-        if (_player.PlayerState == PlayerState.Dead)
+        switch (_gameState)
         {
-            _deathPanel.Update(gameTime);
-        }
+            case GameState.Menu:
 
-        _inputController.ControlInput();
+                _menu.Update(gameTime);
+                break;
+
+            case GameState.Play:
+
+                _backgroundManager.Update(gameTime);
+                EntityManager.Update(gameTime);
+                _tileManager.Update(gameTime);
+                _timer.Update(gameTime);
+                if (_player.PlayerState == PlayerState.Dead)
+                {
+                    _deathPanel.Update(gameTime);
+                }
+                _inputController.ControlInput();
+                break;
+        }
 
         base.Update(gameTime);
     }
@@ -83,16 +104,26 @@ public class LeapInTheShadow : Game
 
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
-        _backgroundManager.Draw(gameTime, _spriteBatch);
-        EntityManager.Draw(gameTime, _spriteBatch);
-        _tileManager.Draw(gameTime, _spriteBatch);
-        _score.Draw(gameTime, _spriteBatch);
-
-        if(_player.PlayerState == PlayerState.Dead)
+        switch (_gameState)
         {
-            _deathPanel.Draw(_spriteBatch);
-        }
+            case GameState.Menu:
 
+                _menu.Draw(_spriteBatch);
+                break;
+
+            case GameState.Play:
+
+                _backgroundManager.Draw(gameTime, _spriteBatch);
+                EntityManager.Draw(gameTime, _spriteBatch);
+                _tileManager.Draw(gameTime, _spriteBatch);
+                _score.Draw(gameTime, _spriteBatch);
+
+                if (_player.PlayerState == PlayerState.Dead)
+                {
+                    _deathPanel.Draw(_spriteBatch);
+                }
+                break;
+        }
 
         _spriteBatch.End();
 
@@ -110,11 +141,15 @@ public class LeapInTheShadow : Game
         _tileManager = new TileManager(_tilesSpritesheet, _player, _timer, _score);
         _backgroundManager = new BackgroundManager(_backgroundSpritesheet, _player);
         _inputController = new InputController(_player);
-        _deathPanel = new DeathPanel(_buttonSpritesheet);
+        _deathPanel = new DeathPanel(_resetbuttonSpritesheet);
 
         EntityManager.AddEntity(_player);
     }
 
+    private void play(object sender, EventArgs e)
+    {
+        _gameState = GameState.Play;
+    }
 
     private const int SCREEN_WIDTH = 400;
     private const int SCREEN_HEIGHT = 800;
@@ -129,12 +164,14 @@ public class LeapInTheShadow : Game
     private Score _score;
     private Timer _timer;
     private DeathPanel _deathPanel;
+    private Menu _menu;
 
     private Texture2D _backgroundSpritesheet;
     private Texture2D _tilesSpritesheet;
     private Texture2D _catSpritesheet;
     private Texture2D _numbersSpritesheet;
-    private Texture2D _buttonSpritesheet;
+    private Texture2D _resetbuttonSpritesheet;
+    private Texture2D _menubuttonSpritesheet;
 
 }
 
