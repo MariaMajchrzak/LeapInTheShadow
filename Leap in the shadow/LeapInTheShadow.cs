@@ -9,6 +9,7 @@ using Timer = LeapInTheSadow.Entities.Timer;
 using LeapInTheShadow.Entities;
 using System;
 using LeapInTheShadow.System;
+using Microsoft.Xna.Framework.Audio;
 
 namespace LeapInTheSadow;
 
@@ -50,10 +51,11 @@ public class LeapInTheShadow : Game
         _numbersSpritesheet =  Content.Load<Texture2D>("numberSpritesheet");
         _resetbuttonSpritesheet =  Content.Load<Texture2D>("buttonSpritesheet");
         _menubuttonSpritesheet =  Content.Load<Texture2D>("menuButtonSpritesheet");
+        _jumpSound = Content.Load<SoundEffect>("jumpSound");
 
 
 
-        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet);
+        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet, _jumpSound);
         _timer = new Timer(_player);
         _score = new Score(_player, _numbersSpritesheet);
         _tileManager = new TileManager(_tilesSpritesheet, _player, _timer, _score);
@@ -135,7 +137,7 @@ public class LeapInTheShadow : Game
     {
         EntityManager.Clear();
 
-        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet);
+        _player = new Player(new Vector2(PLAYER_START_POSITION_X, PLAYER_START_POSITION_Y), _catSpritesheet, _jumpSound);
         _timer = new Timer(_player);
         _score = new Score(_player, _numbersSpritesheet);
         _tileManager = new TileManager(_tilesSpritesheet, _player, _timer, _score);
@@ -172,6 +174,7 @@ public class LeapInTheShadow : Game
     private Texture2D _numbersSpritesheet;
     private Texture2D _resetbuttonSpritesheet;
     private Texture2D _menubuttonSpritesheet;
+    private SoundEffect _jumpSound;
 
 }
 

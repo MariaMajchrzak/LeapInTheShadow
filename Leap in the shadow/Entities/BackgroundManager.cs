@@ -22,7 +22,7 @@ namespace LeapInTheSadow.Entities
             _backgroundTiles = new Queue<BackgroundTile>();
             _player = player;
 
-            _player.OnPlayerGoUp += MoveDownBackground;
+            _player.LowDownAllBackground += MoveDownBackground;
 
             backgroundInit();
         }
@@ -80,7 +80,6 @@ namespace LeapInTheSadow.Entities
         private Sprite _startBackground;
         private Sprite _defaultBackground;
 
-        private Random _random;
         private int _backgroundToRemove;
         private Player _player;
 

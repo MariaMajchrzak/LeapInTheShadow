@@ -1,6 +1,7 @@
 ﻿using LeapInTheSadow.Graphics;
 using LeapInTheSadow.System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -9,7 +10,7 @@ namespace LeapInTheSadow.Entities
     class Player : IEntity
     {
 
-        public Player(Vector2 position, Texture2D spritesheet)
+        public Player(Vector2 position, Texture2D spritesheet, SoundEffect jumpSound)
         {
             this.Position = position;
 
@@ -18,6 +19,7 @@ namespace LeapInTheSadow.Entities
             _jumpRightPlayerSprite = new Sprite(33, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
             _jumpLeftPlayerSprite = new Sprite(49, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
             _fallingPlayerSprite = new Sprite(66, 0, PLAYER_WIDTH, PLAYER_HEIGHT, spritesheet, PLAYER_SCALE);
+            _jumpSound = jumpSound;
 
             _tilesPassed = 0;
             makeBlinkingAnimation();
@@ -26,7 +28,7 @@ namespace LeapInTheSadow.Entities
         public Vector2 Position { get; set; }
         public PlayerState PlayerState { get; set; } = PlayerState.idle;
 
-        public event EventHandler OnPlayerGoUp;
+        public event EventHandler LowDownAllBackground;
         public event EventHandler OnPlayerScorePoint;
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -96,6 +98,7 @@ namespace LeapInTheSadow.Entities
         private Sprite _jumpRightPlayerSprite;
         private Sprite _jumpLeftPlayerSprite;
         private Sprite _fallingPlayerSprite;
+        private SoundEffect _jumpSound;
 
         private Animation _blinkingPlayer;
 
@@ -129,11 +132,11 @@ namespace LeapInTheSadow.Entities
             }
             else
             {
-                OnPlayerGoUp?.Invoke(this, EventArgs.Empty);
+                LowDownAllBackground?.Invoke(this, EventArgs.Empty);
                 OnPlayerScorePoint?.Invoke(this, EventArgs.Empty);
             }
+            _jumpSound.Play(0.2f, 0, 0);
         }
-
         private void makeBlinkingAnimation()
         {
             _blinkingPlayer = new Animation();

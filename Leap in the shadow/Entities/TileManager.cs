@@ -30,7 +30,7 @@ namespace LeapInTheSadow.Entities
             _timer = timer;
             _score = score;
 
-            _player.OnPlayerGoUp += GenerateNewTiles;
+            _player.LowDownAllBackground += GenerateNewTiles;
             tilesInit();
         }
 
