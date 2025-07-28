@@ -19,6 +19,7 @@ git clone https://github.com/maniulka209/LeapInTheShadow
 7. Click **Publish**
 8. The compiled game will appear in the `publish` folder as `LeapInTheShadow.exe` along with all required files.
 ## Inspiration
-LeapInTheShadow was inspired by [game](https://gx.games/pl/games/ebyzbm/run-bun-bun-run/)
+LeapInTheShadow was inspired by [this game](https://gx.games/pl/games/ebyzbm/run-bun-bun-run/)
 #
 ![gameplay](readmeAssets/gameplay.gif)
+
