@@ -7,7 +7,7 @@ Right arrow - jump right
 ## Building
 1. clone repository
 ```bash
-git clone https://github.com/maniulka209/LeapInTheShadow
+git clone https://github.com/MariaMajchrzak/LeapInTheShadow
 ```
 2. Open the project in **Visual Studio**.
 3. Select **Release** configuration.
